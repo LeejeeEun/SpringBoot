@@ -1,17 +1,23 @@
 package com.codepresso.controllerexcercise.controller;
 
+import com.codepresso.controllerexcercise.Service.PostService;
 import com.codepresso.controllerexcercise.dto.PostDto;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/post")
 public class PostController {
 
+    PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
     @GetMapping
-    public String getPost() {
-        return "GET /post";
+    public PostDto getPost(@RequestParam Integer id) {
+        PostDto result = postService.getPost(id);
+        return result;
     }
     @PostMapping
     public String savePost(@RequestBody PostDto postDto) {
